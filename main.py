@@ -86,11 +86,10 @@ class Game:
         allOrders = list(map(list, itertools.permutations(originalList)))   # creates all permutations of originalList (maps the tuple origination in iterTools to a list, then places them in a list)
 
         for order in allOrders:
-            print(order)
+            orderCopy = order.copy()
             score = self.simulateGame(order)
-            print(score)
             if score > bestScore:
-                bestOrder = order
+                bestOrder = orderCopy
                 bestScore = score
 
         return bestOrder
@@ -136,6 +135,7 @@ def main():
     game = ingest()
     result = game.optimize()
     print(result)
+    print(game.simulateGame(result)) #to print score
 
 
 if __name__ == "__main__":
