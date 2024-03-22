@@ -37,15 +37,15 @@ class Game:
 
         # this simulates all turns
         for turn in range(0, self.numTurns):
-            if len(order) == 0: #in case it kills all demons before the end of the match
+            if len(order) == 0:  # in case it kills all demons before the end of the match
                 break
-            #print("turn : " + str(turn))
+            # print("turn : " + str(turn))
             # check if I can collect stamina in this turn, then discard the entry in the list
             for i in staminaList:
                 if i.turn == turn:
                     # case in which i could replenish stamina
                     if currentStamina < self.pandora.maxStamina:
-                        #print("gained " + str(i.value) + " stamina")
+                        # print("gained " + str(i.value) + " stamina")
                         currentStamina += i.value
                     # done to avoid going over maxStamina (could be written more elegantly)
                     if currentStamina > self.pandora.maxStamina:
@@ -54,11 +54,11 @@ class Game:
                     staminaList.pop(staminaList.index(i))
 
             # now select a demon and see if I can fight him
-            #print(order)
-            #print("current stamina " + str(currentStamina))
+            # print(order)
+            # print("current stamina " + str(currentStamina))
             selectedDemon: Demon = self.demonList[order[0]]
             if selectedDemon.consumedStamina <= currentStamina:
-                #print("decision taken, killing " + str(order[0]))
+                # print("decision taken, killing " + str(order[0]))
                 # drain energy
                 currentStamina -= selectedDemon.consumedStamina
                 # set staminaList and fragmentList
@@ -82,8 +82,10 @@ class Game:
     def optimize(self):
 
         bestScore = 0
-        originalList = [item for item in range(0, len(self.demonList))]     # creates a list ranging from 0 to num of demons minus one
-        allOrders = list(map(list, itertools.permutations(originalList)))   # creates all permutations of originalList (maps the tuple origination in iterTools to a list, then places them in a list)
+        originalList = [item for item in
+                        range(0, len(self.demonList))]  # creates a list ranging from 0 to num of demons minus one
+        allOrders = list(map(list, itertools.permutations(
+            originalList)))  # creates all permutations of originalList (maps the tuple origination in iterTools to a list, then places them in a list)
 
         for order in allOrders:
             orderCopy = order.copy()
@@ -105,8 +107,10 @@ class Demon:
 
 
 def ingest():
+    # here goes reference to file
+    path = ""
     # This opens a handle to your file, in 'r' read mode
-    file_handle = open('C:\\Users\\daniel\\Desktop\\test.txt', 'r')
+    file_handle = open(path, 'r')
     # Read in all the lines of your file into a list of lines
     lines_list = file_handle.readlines()
     # Do a double-nested list comprehension to get the rest of the data into your matrix
@@ -135,7 +139,7 @@ def main():
     game = ingest()
     result = game.optimize()
     print(result)
-    print(game.simulateGame(result)) #to print score
+    print(game.simulateGame(result))  # to print score
 
 
 if __name__ == "__main__":
